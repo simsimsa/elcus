@@ -1,0 +1,45 @@
+.custom-button {
+  padding: 0.5rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all var(--transition);
+  border: none;
+
+  &.btn-primary {
+    background-color: var(--primary-blue);
+    color: var(--bg-white);
+
+    &:hover {
+      background-color: #00267a;
+    }
+  }
+
+  &.btn-outline {
+    background-color: transparent;
+    border: 1px solid var(--primary-blue);
+    color: var(--primary-blue);
+
+    &:hover {
+      background-color: var(--primary-blue);
+      color: var(--bg-white);
+    }
+  }
+
+  &.btn-text {
+    background-color: transparent;
+    color: var(--text-gray);
+    padding: 0.5rem;
+
+    &:hover {
+      color: var(--text-dark);
+    }
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}

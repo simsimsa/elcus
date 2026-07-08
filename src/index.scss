@@ -1,0 +1,40 @@
+:root {
+  --primary-blue: #0033a0;
+  --text-dark: #222222;
+  --text-gray: #666666;
+  --bg-main: #f9f9fb;
+  --bg-white: #ffffff;
+  --border-color: #e0e0e0;
+
+  --font-main: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --transition: 0.2s ease-in-out;
+  --radius: 8px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-main);
+  color: var(--text-dark);
+  background-color: var(--bg-main);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page-layout {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+}
+
+.card {
+  background-color: var(--bg-white);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
