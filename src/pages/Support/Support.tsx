@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import PageHeader from '../../components/ui/PageHeader/PageHeader';
 import './Support.scss';
 
 const Support: React.FC = () => {
@@ -7,9 +8,13 @@ const Support: React.FC = () => {
 
   return (
     <main className="support-page">
-      <h1 className="page-title">{t('pageTitles.support')}</h1>
+      <PageHeader
+        title={t('support.title')}
+        description={t('support.description')}
+        bgImage="/images/circuit-bg.png"
+      />
 
-      <div className="card contacts-grid">Тут поддержка</div>
+      <div className="support-content-placeholder"></div>
     </main>
   );
 };

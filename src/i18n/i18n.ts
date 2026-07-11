@@ -80,6 +80,11 @@ const resources = {
       'about.docs.btn_events_ram': 'Перечень (Раменское)',
       'about.docs.btn_summary_ram': 'Ведомость (Раменское)',
 
+      //support
+      'support.title': 'Поддержка',
+      'support.description':
+        'Ответы на популярные вопросы по продукции и программному обеспечению',
+
       //contacts
       'contacts.title': 'Контакты',
       'contacts.spb.title': 'Главный офис (Санкт-Петербург)',
@@ -171,6 +176,11 @@ const resources = {
       'about.cards.news.title': 'Company News',
       'about.cards.news.desc': 'Latest news and events',
       'about.cards.news.btn': 'Read news',
+
+      //support
+      'support.title': 'Support',
+      'support.description':
+        'Answers to frequently asked questions about our products and software',
 
       //contacts
       'contacts.title': 'Contacts',
