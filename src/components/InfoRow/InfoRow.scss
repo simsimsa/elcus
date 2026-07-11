@@ -1,0 +1,41 @@
+.info-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+    flex-shrink: 0;
+
+    svg {
+      width: 22px;
+      height: 22px;
+      stroke: var(--primary-blue, #0033a0);
+    }
+  }
+
+  .text {
+    font-size: 1.05rem;
+    line-height: 1.5;
+    color: var(--text-dark, #333);
+
+    a {
+      color: var(--primary-blue, #0033a0);
+      text-decoration: none;
+      transition: opacity 0.3s ease;
+
+      &:hover {
+        opacity: 0.8;
+        text-decoration: underline;
+      }
+    }
+
+    &.format-newlines {
+      white-space: pre-wrap;
+    }
+  }
+}

@@ -1,0 +1,27 @@
+.contacts-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  .divider {
+    border: none;
+    height: 1px;
+    background-color: var(--border-color, #eaeaea);
+    margin: 0;
+  }
+
+  .email-block {
+    margin-top: 0.5rem;
+
+    .write-us-btn {
+      margin-top: 1rem;
+      padding: 0.8rem 2.5rem;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .contacts-info .write-us-btn {
+    width: 100%;
+  }
+}

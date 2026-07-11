@@ -1,0 +1,61 @@
+.info-card {
+  background: #ffffff;
+  border: 1px solid var(--border-color, #eaeaea);
+  border-radius: 12px;
+  padding: 2.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  height: 100%;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  }
+
+  .card-icon {
+    margin-bottom: 1.5rem;
+    color: var(--primary-blue, #0033a0);
+
+    svg {
+      width: 48px;
+      height: 48px;
+      stroke-width: 1.5;
+    }
+  }
+
+  h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-dark, #1a1a1a);
+    margin: 0 0 1rem 0;
+  }
+
+  p {
+    font-size: 0.95rem;
+    color: var(--text-gray, #666);
+    line-height: 1.5;
+    margin: 0 0 2rem 0;
+    flex-grow: 1;
+  }
+
+  .custom-button {
+    width: 100%;
+  }
+
+  .clickable-card {
+    cursor: pointer;
+    transition:
+      transform var(--transition),
+      box-shadow var(--transition);
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+  }
+}

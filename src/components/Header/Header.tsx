@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import './Header.scss';
 import LanguageSwitcher from '../ui/LanguageSwitcher/LanguageSwitcher';
@@ -11,7 +11,9 @@ const Header: React.FC = () => {
     <header className="main-header">
       <div className="header-container">
         <div className="logo">
-          <h1>ЭЛКУС</h1>
+          <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <h1>ЭЛКУС</h1>
+          </Link>
         </div>
 
         <nav className="main-nav">

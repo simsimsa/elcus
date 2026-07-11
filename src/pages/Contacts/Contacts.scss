@@ -1,0 +1,70 @@
+.contacts-page {
+  padding: 3rem 5%;
+  background-color: #f8fafc;
+  min-height: calc(100vh - 80px);
+  display: flex;
+  justify-content: center;
+}
+
+.contacts-wrapper {
+  max-width: 1200px;
+  width: 100%;
+
+  .page-title {
+    font-size: 2.5rem;
+    color: var(--primary-blue, #0033a0);
+    margin-bottom: 2rem;
+  }
+}
+
+.contacts-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-color, #eaeaea);
+  overflow: hidden;
+  padding: 3rem;
+}
+
+/* Стили карты */
+.contacts-map {
+  border-radius: 12px;
+  overflow: hidden;
+  min-height: 400px;
+  background-color: #eef2f6;
+
+  .map-iframe {
+    display: block;
+    border-radius: 12px;
+  }
+}
+
+/* Общий адаптив сетки страницы */
+@media (max-width: 900px) {
+  .contacts-content {
+    grid-template-columns: 1fr;
+    padding: 2rem;
+  }
+
+  .contacts-map {
+    min-height: 350px;
+    order: -1; /* Поднимаем карту наверх на мобильных и планшетах */
+  }
+}
+
+@media (max-width: 600px) {
+  .contacts-page {
+    padding: 2rem 1rem;
+  }
+
+  .contacts-wrapper .page-title {
+    font-size: 2rem;
+  }
+
+  .contacts-content {
+    padding: 1.5rem;
+  }
+}
