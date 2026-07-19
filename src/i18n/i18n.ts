@@ -122,6 +122,19 @@ const resources = {
       'articles.read_btn': 'Читать',
       'articles.all_news_btn': 'Все статьи',
       'articles.all_sources_btn': 'Все ссылки',
+
+      // Общие элементы (кнопки, состояния)
+      'common.loading': 'Загрузка...',
+      'common.back': 'Назад в каталог',
+
+      // Каталог продукции
+      'products.title': 'Каталог продукции',
+      'products.all_products': 'Все продукты',
+      'products.popular': 'Популярные продукты',
+      'products.details': 'Подробнее',
+      'products.show_all': 'Показать все',
+      'products.attributes': 'Характеристики',
+      'products.empty': 'Товары не найдены',
     },
   },
   en: {
@@ -241,6 +254,19 @@ const resources = {
       'articles.read_btn': 'Read',
       'articles.all_news_btn': 'All articles',
       'articles.all_sources_btn': 'All links',
+
+      // Общие элементы (кнопки, состояния)
+      'common.loading': 'Loading...',
+      'common.back': 'Back to catalog',
+
+      // Каталог продукции
+      'products.title': 'Product Catalog',
+      'products.all_products': 'All products',
+      'products.popular': 'Popular products',
+      'products.details': 'Details',
+      'products.show_all': 'Show all',
+      'products.attributes': 'Specifications',
+      'products.empty': 'No products found',
     },
   },
 };

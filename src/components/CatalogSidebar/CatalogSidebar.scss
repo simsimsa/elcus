@@ -1,0 +1,43 @@
+.catalog-sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: var(--bg-light, #f8f9fa);
+  padding: 1rem;
+  border-radius: 12px;
+
+  @media (max-width: 900px) {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .category-btn {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-dark, #333);
+    text-align: left;
+    cursor: pointer;
+    transition:
+      background var(--transition, 0.2s ease),
+      color var(--transition, 0.2s ease);
+
+    &:hover {
+      background: var(--hover-light, #e9ecef);
+    }
+
+    &.active {
+      background: var(--bg-white, #ffffff);
+      color: var(--primary-blue, #0056b3);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+  }
+}

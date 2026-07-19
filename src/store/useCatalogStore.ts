@@ -71,6 +71,7 @@ interface CatalogState {
   activeCategoryId: number;
   isExpanded: boolean;
   isLoading: boolean;
+  getProductById: (id: number) => Product | undefined;
   fetchInitialData: () => Promise<void>;
   setActiveCategory: (id: number) => Promise<void>;
   expandCatalog: () => Promise<void>;
@@ -83,6 +84,12 @@ export const useCatalogStore = create<CatalogState>((set, get) => ({
   isExpanded: false,
   isLoading: false,
 
+  getProductById: (id: number) => {
+    return (
+      get().products.find((p) => p.product_id === id) ||
+      MOCK_PRODUCTS.find((p) => p.product_id === id)
+    );
+  },
   fetchInitialData: async () => {
     set({ isLoading: true });
     setTimeout(() => {
