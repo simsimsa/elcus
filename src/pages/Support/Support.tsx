@@ -2,6 +2,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import PageHeader from '../../components/ui/PageHeader/PageHeader';
 import './Support.scss';
+import SupportContacts from '../../components/SupportContacts/SupportContacts';
+import FaqSection from '../../components/FaqSection/FaqSection';
 
 const Support: React.FC = () => {
   const { t } = useTranslation();
@@ -14,7 +16,10 @@ const Support: React.FC = () => {
         bgImage="/images/circuit-bg.png"
       />
 
-      <div className="support-content-placeholder"></div>
+      <div className="support-content">
+        <SupportContacts />
+        <FaqSection />
+      </div>
     </main>
   );
 };

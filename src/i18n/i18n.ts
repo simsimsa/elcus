@@ -80,11 +80,6 @@ const resources = {
       'about.docs.btn_events_ram': 'Перечень (Раменское)',
       'about.docs.btn_summary_ram': 'Ведомость (Раменское)',
 
-      //support
-      'support.title': 'Поддержка',
-      'support.description':
-        'Ответы на популярные вопросы по продукции и программному обеспечению',
-
       //contacts
       'contacts.title': 'Контакты',
       'contacts.spb.title': 'Главный офис (Санкт-Петербург)',
@@ -99,6 +94,34 @@ const resources = {
       'contacts.email.label': 'Email',
       'contacts.email.value': 'mail@elcus.ru',
       'contacts.write_us': 'Написать нам',
+
+      //support
+      'support.title': 'Поддержка',
+      'support.description':
+        'Ответы на популярные вопросы по продукции и программному обеспечению',
+      'support.contacts.title': 'Не нашли ответ на свой вопрос?',
+      'support.contacts.desc': 'Свяжитесь с нашей службой поддержки',
+      'support.contacts.ask_btn': 'Задать вопрос',
+      'support.faq.categories_title': 'Категории вопросов',
+      'support.faq.empty': 'Для данной категории пока нет вопросов.',
+
+      // support categories
+      'support.categories.arinc': 'Адаптеры ARINC-429',
+      'support.categories.can': 'Адаптеры CAN',
+      'support.categories.mil': 'Адаптеры MIL-STD-1553B',
+      'support.categories.software': 'Программное обеспечение',
+      'support.categories.other': 'Прочее оборудование',
+      'support.categories.general': 'Общие вопросы',
+
+      //articles
+      'articles.header.title': 'Статьи и полезные ссылки',
+      'articles.header.desc':
+        'Полезные материалы, инструкции и обзоры нашей продукции',
+      'articles.tab.news': 'Статьи',
+      'articles.tab.sources': 'Полезные ссылки',
+      'articles.read_btn': 'Читать',
+      'articles.all_news_btn': 'Все статьи',
+      'articles.all_sources_btn': 'Все ссылки',
     },
   },
   en: {
@@ -177,11 +200,6 @@ const resources = {
       'about.cards.news.desc': 'Latest news and events',
       'about.cards.news.btn': 'Read news',
 
-      //support
-      'support.title': 'Support',
-      'support.description':
-        'Answers to frequently asked questions about our products and software',
-
       //contacts
       'contacts.title': 'Contacts',
       'contacts.spb.title': 'Main Office (St. Petersburg)',
@@ -196,6 +214,33 @@ const resources = {
       'contacts.email.label': 'Email',
       'contacts.email.value': 'mail@elcus.ru',
       'contacts.write_us': 'Write to us',
+
+      'support.title': 'Support',
+      'support.description':
+        'Answers to popular questions about products and software',
+      'support.contacts.title': "Didn't find an answer to your question?",
+      'support.contacts.desc': 'Contact our support team',
+      'support.contacts.ask_btn': 'Ask a question',
+      'support.faq.categories_title': 'FAQ Categories',
+      'support.faq.empty': 'There are no questions for this category yet.',
+
+      // Translations for categories
+      'support.categories.arinc': 'ARINC-429 Adapters',
+      'support.categories.can': 'CAN Adapters',
+      'support.categories.mil': 'MIL-STD-1553B Adapters',
+      'support.categories.software': 'Software',
+      'support.categories.other': 'Other Equipment',
+      'support.categories.general': 'General Questions',
+
+      //articles
+      'articles.header.title': 'Articles and Useful Links',
+      'articles.header.desc':
+        'Useful materials, instructions, and product reviews',
+      'articles.tab.news': 'Articles',
+      'articles.tab.sources': 'Useful Links',
+      'articles.read_btn': 'Read',
+      'articles.all_news_btn': 'All articles',
+      'articles.all_sources_btn': 'All links',
     },
   },
 };
