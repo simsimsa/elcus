@@ -135,6 +135,25 @@ const resources = {
       'products.show_all': 'Показать все',
       'products.attributes': 'Характеристики',
       'products.empty': 'Товары не найдены',
+
+      // Soft (Драйверы и ПО)
+      'soft.title': 'Драйверы и программное обеспечение',
+      'soft.download': 'Скачать',
+      'soft.show_all': 'Все версии',
+      'soft.empty': 'Файлы для данной ОС пока не добавлены.',
+
+      //museum
+      museum: {
+        title: 'Музей ретро электроники',
+        description_p1:
+          'В атриуме здания АО «Элкус» на Благодатной ул., д. 10 (на 4 этаже) открыл свои двери «Музей ретро электроники». Генеральный директор АО «Элкус» Сергей Тимофеевич Хвощ собирал коллекцию громкоговорителей, граммофонов, радиоприемников, проигрывателей, кассетных и катушечных магнитофонов, телевизоров много лет и, наконец, появилось достойное место для этой не маленькой коллекции.',
+        description_p2:
+          'Помимо ретроэлектроники в нашем музее можно увидеть музыкальные инструменты и различные измерительные приборы прошлого столетия. В нашем музее можно увидеть по-настоящему уникальные экспонаты. К примеру, Вы можете увидеть метроном, который звучал по радио в Блокадном Ленинграде во время Великой Отечественной Войны. Многие экспонаты были подарены музею известными политическими деятелями, учеными, сотрудниками АО «Элкус».',
+        description_p3:
+          'Наш музей растет и расширяется, поэтому мы готовы принять в дар, обменять или выкупить заинтересовавший нас экземпляр для пополнения нашей коллекции. Связаться с нами можно по телефону +7(812) 369-01-04, 610-18-84, а также по электронной почте: mail@elcus.ru',
+        exhibits_title: 'Некоторые экспонаты',
+        show_all_btn: 'Смотреть все экспонаты',
+      },
     },
   },
   en: {
@@ -267,6 +286,25 @@ const resources = {
       'products.show_all': 'Show all',
       'products.attributes': 'Specifications',
       'products.empty': 'No products found',
+
+      // Soft (Drivers & Software)
+      'soft.title': 'Drivers and Software',
+      'soft.download': 'Download',
+      'soft.show_all': 'All versions of',
+      'soft.empty': 'No files found for this OS.',
+
+      //museum
+      museum: {
+        title: 'Retro Electronics Museum',
+        description_p1:
+          "The 'Retro Electronics Museum' has opened its doors in the atrium of the Elcus JSC building at 10 Blagodatnaya St. (on the 4th floor). The CEO of Elcus JSC, Sergey Timofeevich Khvoshch, has been collecting loudspeakers, gramophones, radios, record players, cassette and reel-to-reel tape recorders, and televisions for many years, and finally, a worthy place has appeared for this sizable collection.",
+        description_p2:
+          'In addition to retro electronics, our museum features musical instruments and various measuring devices from the last century. In our museum, you can see truly unique exhibits. For example, you can see a metronome that sounded on the radio in besieged Leningrad during the Great Patriotic War. Many exhibits were donated to the museum by famous politicians, scientists, and employees of Elcus JSC.',
+        description_p3:
+          'Our museum is growing and expanding, so we are ready to accept as a gift, exchange, or purchase an item of interest to replenish our collection. You can contact us by phone +7(812) 369-01-04, 610-18-84, or by email: mail@elcus.ru',
+        exhibits_title: 'Selected Exhibits',
+        show_all_btn: 'See all exhibits',
+      },
     },
   },
 };

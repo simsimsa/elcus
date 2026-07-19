@@ -1,0 +1,49 @@
+.soft-tabs-container {
+  border-bottom: 2px solid var(--border-color, #e0e0e0);
+  margin-bottom: 2rem;
+  overflow-x: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.soft-tabs {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  white-space: nowrap;
+
+  .soft-tab {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-gray, #666);
+    padding-bottom: 1rem;
+    cursor: pointer;
+    position: relative;
+    transition: color var(--transition, 0.2s ease);
+
+    &:hover {
+      color: var(--primary-blue, #0056b3);
+    }
+
+    &.active {
+      color: var(--primary-blue, #0056b3);
+      font-weight: 600;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background-color: var(--primary-blue, #0056b3);
+        border-radius: 3px 3px 0 0;
+      }
+    }
+  }
+}

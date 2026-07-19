@@ -1,0 +1,34 @@
+.soft-list-container {
+  background: var(--bg-white, #ffffff);
+  border-radius: 12px;
+  padding: 1rem 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  border: 1px solid var(--border-color, #e0e0e0);
+
+  @media (max-width: 600px) {
+    padding: 1rem;
+  }
+
+  .soft-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .soft-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    padding-bottom: 1rem;
+
+    button {
+      min-width: 250px;
+    }
+  }
+
+  .soft-message {
+    padding: 3rem;
+    text-align: center;
+    color: var(--text-gray, #666);
+    font-size: 1.1rem;
+  }
+}

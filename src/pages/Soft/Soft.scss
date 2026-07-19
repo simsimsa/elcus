@@ -1,0 +1,16 @@
+.soft-page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+
+  .page-title {
+    font-size: 2rem;
+    margin-bottom: 2.5rem;
+    color: var(--text-dark, #1a1a1a);
+  }
+
+  .soft-content {
+    display: flex;
+    flex-direction: column;
+  }
+}
