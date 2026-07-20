@@ -1,13 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useMuseumStore } from '../../store/museumStore';
+import './Museum.scss';
+import MuseumHero from '../../components/MuseumHero/MuseumHero';
+import MuseumExhibits from '../../components/MuseumExhibits/MuseumExhibits';
 
 const Museum: React.FC = () => {
+  const { items, isExpanded, expandAll } = useMuseumStore();
+
   return (
-    <div style={{ padding: '2rem', textAlign: 'center' }}>
-      <h1>Музей</h1>
-      <p>Здесь будет музей ретро электроники</p>
-      <Link to="/about">← Назад к компании</Link>
-    </div>
+    <main className="museum-page">
+      <MuseumHero />
+      <MuseumExhibits
+        items={items}
+        isExpanded={isExpanded}
+        onExpandAll={expandAll}
+      />
+    </main>
   );
 };
 

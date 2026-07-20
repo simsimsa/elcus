@@ -154,6 +154,11 @@ const resources = {
         exhibits_title: 'Некоторые экспонаты',
         show_all_btn: 'Смотреть все экспонаты',
       },
+
+      //
+      charity: {
+        title: 'Благотворительность',
+      },
     },
   },
   en: {
@@ -304,6 +309,11 @@ const resources = {
           'Our museum is growing and expanding, so we are ready to accept as a gift, exchange, or purchase an item of interest to replenish our collection. You can contact us by phone +7(812) 369-01-04, 610-18-84, or by email: mail@elcus.ru',
         exhibits_title: 'Selected Exhibits',
         show_all_btn: 'See all exhibits',
+      },
+
+      //
+      charity: {
+        title: 'Charity',
       },
     },
   },
