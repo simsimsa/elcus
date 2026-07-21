@@ -297,6 +297,7 @@ const resources = {
       'soft.download': 'Download',
       'soft.show_all': 'All versions of',
       'soft.empty': 'No files found for this OS.',
+      Новости: 'News',
 
       //museum
       museum: {
