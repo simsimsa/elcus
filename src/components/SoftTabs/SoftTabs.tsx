@@ -20,9 +20,9 @@ const SoftTabs: React.FC<SoftTabsProps> = ({
       <ul className="soft-tabs">
         {osList.map((os) => (
           <li
-            key={os.OS_id}
-            className={`soft-tab ${activeOsId === os.OS_id ? 'active' : ''}`}
-            onClick={() => !isLoading && onTabChange(os.OS_id)}
+            key={os.id_os}
+            className={`soft-tab ${activeOsId === os.id_os ? 'active' : ''}`}
+            onClick={() => !isLoading && onTabChange(os.id_os)}
           >
             {os.os_name}
           </li>

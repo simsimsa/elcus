@@ -22,7 +22,7 @@ const Soft: React.FC = () => {
     fetchInitialData();
   }, [fetchInitialData]);
 
-  const activeOs = osList.find((os) => os.OS_id === activeOsId);
+  const activeOs = osList.find((os) => os.id_os === activeOsId);
 
   return (
     <main className="soft-page">

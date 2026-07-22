@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 export interface OS {
-  OS_id: number;
+  id_os: number;
   os_name: string;
 }
 
@@ -13,23 +13,23 @@ export interface Soft {
   soft_file_path: string;
   soft_updated: string;
   description: string;
-  os_id: number;
+  id_os: number;
   product_id: number | null;
 }
 
 const MOCK_OS: OS[] = [
-  { OS_id: 1, os_name: 'Windows' },
-  { OS_id: 2, os_name: 'DOS' },
-  { OS_id: 3, os_name: 'Linux' },
-  { OS_id: 4, os_name: 'QNX' },
-  { OS_id: 5, os_name: 'LabVIEW' },
-  { OS_id: 6, os_name: 'Документация' },
+  { id_os: 1, os_name: 'Windows' },
+  { id_os: 2, os_name: 'DOS' },
+  { id_os: 3, os_name: 'Linux' },
+  { id_os: 4, os_name: 'QNX' },
+  { id_os: 5, os_name: 'LabVIEW' },
+  { id_os: 6, os_name: 'Документация' },
 ];
 
 const MOCK_SOFT: Soft[] = [
   {
     soft_id: 1,
-    os_id: 1,
+    id_os: 1,
     soft_name: 'Windows 10 / 11',
     description: 'Драйверы для Windows 10 и 11 (x86 / x64)',
     version: '2.1.0',
@@ -40,7 +40,7 @@ const MOCK_SOFT: Soft[] = [
   },
   {
     soft_id: 2,
-    os_id: 1,
+    id_os: 1,
     soft_name: 'Windows 7 / 8 / 8.1',
     description: 'Драйверы для Windows 7 / 8 / 8.1',
     version: '1.8.5',
@@ -51,7 +51,7 @@ const MOCK_SOFT: Soft[] = [
   },
   {
     soft_id: 3,
-    os_id: 1,
+    id_os: 1,
     soft_name: 'Windows XP / 2000',
     description: 'Устаревшие версии драйверов',
     version: '1.0.2',
@@ -62,7 +62,7 @@ const MOCK_SOFT: Soft[] = [
   },
   {
     soft_id: 4,
-    os_id: 1,
+    id_os: 1,
     soft_name: 'Утилита конфигурации',
     description: 'ПО для настройки плат под Windows',
     version: '3.0.1',
@@ -73,7 +73,7 @@ const MOCK_SOFT: Soft[] = [
   },
   {
     soft_id: 5,
-    os_id: 3,
+    id_os: 3,
     soft_name: 'Linux Kernel 5.x',
     description: 'Исходные коды драйвера для Linux',
     version: '2.0.0',
@@ -105,7 +105,7 @@ export const useSoftStore = create<SoftState>((set, get) => ({
   fetchInitialData: async () => {
     set({ isLoading: true });
     setTimeout(() => {
-      const initialSoft = MOCK_SOFT.filter((s) => s.os_id === 1).slice(0, 2);
+      const initialSoft = MOCK_SOFT.filter((s) => s.id_os === 1).slice(0, 2);
       set({
         osList: MOCK_OS,
         softItems: initialSoft,
@@ -119,7 +119,7 @@ export const useSoftStore = create<SoftState>((set, get) => ({
   setActiveOs: async (id: number) => {
     set({ isLoading: true, activeOsId: id, isExpanded: false });
     setTimeout(() => {
-      const filtered = MOCK_SOFT.filter((s) => s.os_id === id).slice(0, 2);
+      const filtered = MOCK_SOFT.filter((s) => s.id_os === id).slice(0, 2);
       set({ softItems: filtered, isLoading: false });
     }, 300);
   },
@@ -128,7 +128,7 @@ export const useSoftStore = create<SoftState>((set, get) => ({
     const { activeOsId } = get();
     set({ isLoading: true });
     setTimeout(() => {
-      const allOsSoft = MOCK_SOFT.filter((s) => s.os_id === activeOsId);
+      const allOsSoft = MOCK_SOFT.filter((s) => s.id_os === activeOsId);
       set({ softItems: allOsSoft, isExpanded: true, isLoading: false });
     }, 500);
   },

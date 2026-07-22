@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import type { Soft } from './useSoftStore';
 
 export interface Category {
   id_category: number;
@@ -6,13 +7,23 @@ export interface Category {
   subcategory_id: number | null;
 }
 
+export interface DocumentItem {
+  doc_id: number;
+  doc_name: string;
+  doc_file_path: string;
+  doc_size?: string;
+  doc_updated?: string;
+}
+
 export interface Product {
   product_id: number;
   product_name: string;
-  product_article: string;
-  product_description: string;
-  product_attributes: Record<string, string>;
+  product_article?: string;
+  product_description?: string;
+  product_attributes?: Record<string, string>;
   id_category: number;
+  documents?: DocumentItem[];
+  softwares?: Soft[];
 }
 
 const MOCK_CATEGORIES: Category[] = [
