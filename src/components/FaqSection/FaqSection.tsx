@@ -9,7 +9,7 @@ const FaqSection: React.FC = () => {
     useFaqStore();
 
   const activeFaqs = faqs.filter(
-    (faq) => faq.faq_category_id === activeCategoryId
+    (faq) => faq.id_faq_category === activeCategoryId
   );
 
   return (
@@ -18,10 +18,10 @@ const FaqSection: React.FC = () => {
         <h3>{t('support.faq.categories_title')}</h3>
         <ul className="faq-category-list">
           {categories.map((category) => (
-            <li key={category.faq_category_id}>
+            <li key={category.id_faq_category}>
               <button
-                className={`category-btn ${activeCategoryId === category.faq_category_id ? 'active' : ''}`}
-                onClick={() => setActiveCategory(category.faq_category_id)}
+                className={`category-btn ${activeCategoryId === category.id_faq_category ? 'active' : ''}`}
+                onClick={() => setActiveCategory(category.id_faq_category)}
               >
                 {t(category.name_faq_category)}
                 <span className="arrow">›</span>

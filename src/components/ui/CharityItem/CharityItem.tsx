@@ -8,16 +8,35 @@ interface CharityItemProps {
   onImageClick: (imgUrl: string) => void;
 }
 
+const BACKEND_URL = 'http://localhost:8000';
+
+const getImageUrl = (path?: string | null): string => {
+  if (!path) return '';
+  if (path.startsWith('http://') || path.startsWith('https://')) return path;
+  const cleanPath = path.startsWith('/') ? path : `/${path}`;
+  return `${BACKEND_URL}${cleanPath}`;
+};
+
 const CharityItem: React.FC<CharityItemProps> = ({
   item,
   locale = 'ru-RU',
   onImageClick,
 }) => {
-  const dateObj = new Date(item.date);
+  const dateObj = item.date ? new Date(item.date) : new Date();
   const month = new Intl.DateTimeFormat(locale, { month: 'long' }).format(
     dateObj
   );
   const year = dateObj.getFullYear();
+
+  const imagesToRender: string[] = [];
+  if (item.image_path) {
+    imagesToRender.push(getImageUrl(item.image_path));
+  }
+  if (item.gallery && Array.isArray(item.gallery)) {
+    item.gallery.forEach((path) => {
+      if (path) imagesToRender.push(getImageUrl(path));
+    });
+  }
 
   return (
     <div className="charity-item">
@@ -32,12 +51,12 @@ const CharityItem: React.FC<CharityItemProps> = ({
       </div>
 
       <div className="charity-content-col">
-        <h3 className="charity-title">{item.title}</h3>
+        {item.title && <h3 className="charity-title">{item.title}</h3>}
         <p className="charity-description">{item.description}</p>
 
-        {item.images && item.images.length > 0 && (
+        {imagesToRender.length > 0 && (
           <div className="charity-gallery">
-            {item.images.map((imgUrl, index) => (
+            {imagesToRender.map((imgUrl, index) => (
               <div
                 key={index}
                 className="charity-img-wrapper"

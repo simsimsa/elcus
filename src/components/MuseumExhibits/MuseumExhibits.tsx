@@ -5,6 +5,16 @@ import { useMuseumStore } from '../../store/museumStore';
 import ExhibitCard from '../ui/ExhibitCard/ExhibitCard';
 import Button from '../ui/Button/Button';
 
+const BACKEND_URL = 'http://localhost:8000';
+
+const getImageUrl = (path?: string | null): string => {
+  if (!path) return '/images/museum-hero.png';
+  if (path.startsWith('http://') || path.startsWith('https://')) return path;
+
+  const cleanPath = path.startsWith('/') ? path : `/${path}`;
+  return `${BACKEND_URL}${cleanPath}`;
+};
+
 const MuseumExhibits: React.FC = () => {
   const { t } = useTranslation();
   const { items, isExpanded, isLoading, fetchMuseumItems, expandAll } =
@@ -19,7 +29,7 @@ const MuseumExhibits: React.FC = () => {
     image: string;
   } | null>(null);
 
-  const displayItems = isExpanded ? items : items.slice(0, 4);
+  const displayItems = isExpanded ? items : items.slice(0, 8);
 
   if (isLoading && items.length === 0) {
     return (
@@ -42,7 +52,7 @@ const MuseumExhibits: React.FC = () => {
 
       <div className="exhibits-grid">
         {displayItems.map((item) => {
-          const imageUrl = item.image_path || '/images/museum-hero.png';
+          const imageUrl = getImageUrl(item.image_path);
 
           return (
             <ExhibitCard

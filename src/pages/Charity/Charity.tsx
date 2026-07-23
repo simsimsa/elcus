@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCharityStore } from '../../store/charityStore';
 import CharityItem from '../../components/ui/CharityItem/CharityItem';
@@ -6,26 +6,38 @@ import './Charity.scss';
 
 const Charity: React.FC = () => {
   const { t, i18n } = useTranslation();
-  const { items } = useCharityStore();
+  const { items, isLoading, fetchCharity } = useCharityStore();
 
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetchCharity();
+  }, [fetchCharity]);
 
   return (
     <main className="charity-page">
       <div className="charity-header">
-        <h1 className="charity-main-title">{t('charity.title')}</h1>
+        <h1 className="charity-main-title">
+          {t('charity.title', 'Благотворительность')}
+        </h1>
       </div>
 
-      <div className="charity-timeline-container">
-        {items.map((item) => (
-          <CharityItem
-            key={item.charity_id}
-            item={item}
-            locale={i18n.language === 'en' ? 'en-US' : 'ru-RU'}
-            onImageClick={setSelectedImage}
-          />
-        ))}
-      </div>
+      {isLoading ? (
+        <div className="charity-loading">
+          {t('common.loading', 'Загрузка...')}
+        </div>
+      ) : (
+        <div className="charity-timeline-container">
+          {items.map((item) => (
+            <CharityItem
+              key={item.charity_id}
+              item={item}
+              locale={i18n.language === 'en' ? 'en-US' : 'ru-RU'}
+              onImageClick={setSelectedImage}
+            />
+          ))}
+        </div>
+      )}
 
       {selectedImage && (
         <div
