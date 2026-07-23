@@ -12,7 +12,14 @@ const BACKEND_URL = 'http://localhost:8000';
 
 const getImageUrl = (path?: string | null): string => {
   if (!path) return '';
-  if (path.startsWith('http://') || path.startsWith('https://')) return path;
+  if (
+    path.startsWith('http://') ||
+    path.startsWith('https://') ||
+    path.startsWith('data:')
+  ) {
+    return path;
+  }
+
   const cleanPath = path.startsWith('/') ? path : `/${path}`;
   return `${BACKEND_URL}${cleanPath}`;
 };
@@ -22,7 +29,21 @@ const CharityItem: React.FC<CharityItemProps> = ({
   locale = 'ru-RU',
   onImageClick,
 }) => {
-  const dateObj = item.date ? new Date(item.date) : new Date();
+  let dateObj = new Date();
+
+  if (item.date) {
+    const match = item.date.match(/T\d{2}:\d{2}:(\d{2})\.(\d{4})/);
+
+    if (match) {
+      const month = parseInt(match[1], 10) - 1;
+      const year = parseInt(match[2], 10);
+      dateObj = new Date(year, month);
+    } else {
+      const parsed = new Date(item.date);
+      if (!isNaN(parsed.getTime())) dateObj = parsed;
+    }
+  }
+
   const month = new Intl.DateTimeFormat(locale, { month: 'long' }).format(
     dateObj
   );
