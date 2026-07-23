@@ -19,6 +19,14 @@ const NewsItem: React.FC<NewsItemProps> = ({
   );
   const year = dateObj.getFullYear();
 
+  const imagesToRender: string[] = [];
+  if (item.image_path) {
+    imagesToRender.push(item.image_path);
+  }
+  if (item.gallery && Array.isArray(item.gallery)) {
+    imagesToRender.push(...item.gallery);
+  }
+
   return (
     <div className="news-item">
       <div className="news-date-col">
@@ -34,10 +42,10 @@ const NewsItem: React.FC<NewsItemProps> = ({
       <div className="news-content-col">
         <h3 className="news-title">{item.news_title}</h3>
         <p className="news-description">{item.news_content}</p>
-
-        {item.images && item.images.length > 0 && (
+ы
+        {imagesToRender.length > 0 && (
           <div className="news-gallery">
-            {item.images.map((imgUrl, index) => (
+            {imagesToRender.map((imgUrl, index) => (
               <div
                 key={index}
                 className="news-img-wrapper"
