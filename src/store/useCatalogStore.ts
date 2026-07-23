@@ -1,145 +1,110 @@
 import { create } from 'zustand';
+import { api } from '../api/axios';
 import type { Soft } from './useSoftStore';
 
 export interface Category {
   id_category: number;
   name_category: string;
-  subcategory_id: number | null;
+  subcategory_id?: number | null;
 }
 
 export interface DocumentItem {
   doc_id: number;
   doc_name: string;
   doc_file_path: string;
-  doc_size?: string;
-  doc_updated?: string;
+  doc_size?: string | null;
+  doc_updated?: string | null;
 }
 
 export interface Product {
   product_id: number;
   product_name: string;
-  product_article?: string;
-  product_description?: string;
-  product_attributes?: Record<string, string>;
+  product_article?: string | null;
+  product_description?: string | null;
+  product_attributes?: Record<string, unknown> | null;
   id_category: number;
+  image_path?: string | null;
+  gallery?: string[] | null;
+  category?: Category | null;
   documents?: DocumentItem[];
   softwares?: Soft[];
 }
 
-const MOCK_CATEGORIES: Category[] = [
-  { id_category: 1, name_category: 'Платы', subcategory_id: null },
-  { id_category: 2, name_category: 'Приборы и ПО', subcategory_id: null },
-  { id_category: 3, name_category: 'Индикаторы', subcategory_id: null },
-  { id_category: 4, name_category: 'Комплектующие', subcategory_id: null },
-];
-
-const MOCK_PRODUCTS: Product[] = [
-  {
-    product_id: 1,
-    id_category: 1,
-    product_name: 'PCIe-9118',
-    product_article: 'PL-001',
-    product_description: 'Плата цифрового ввода-вывода',
-    product_attributes: { Шина: 'PCIe', Каналы: '16' },
-  },
-  {
-    product_id: 2,
-    id_category: 1,
-    product_name: 'USB-3100',
-    product_article: 'PL-002',
-    product_description: 'Многофункциональная плата',
-    product_attributes: { Интерфейс: 'USB', АЦП: '12 бит' },
-  },
-  {
-    product_id: 3,
-    id_category: 1,
-    product_name: 'PCIe-1710',
-    product_article: 'PL-003',
-    product_description: 'Многофункциональная плата сбора данных',
-    product_attributes: { Шина: 'PCIe', Частота: '100 кГц' },
-  },
-  {
-    product_id: 4,
-    id_category: 1,
-    product_name: 'VME-64x',
-    product_article: 'PL-004',
-    product_description: 'Процессорный модуль VME',
-    product_attributes: { 'Форм-фактор': '6U', ОЗУ: '4 ГБ' },
-  },
-  {
-    product_id: 5,
-    id_category: 3,
-    product_name: 'Индикатор ИН-14',
-    product_article: 'IND-01',
-    product_description: 'Светодиодный индикатор',
-    product_attributes: { Цвет: 'Зеленый', Напряжение: '5В' },
-  },
-];
-
 interface CatalogState {
   categories: Category[];
   products: Product[];
-  activeCategoryId: number;
-  isExpanded: boolean;
+  currentProduct: Product | null;
+  activeCategoryId: number | null;
   isLoading: boolean;
-  getProductById: (id: number) => Product | undefined;
+  isExpanded: boolean;
+
   fetchInitialData: () => Promise<void>;
   setActiveCategory: (id: number) => Promise<void>;
-  expandCatalog: () => Promise<void>;
+  fetchProductById: (id: number) => Promise<void>;
+  clearCurrentProduct: () => void;
+  expandCatalog: () => void;
 }
 
-export const useCatalogStore = create<CatalogState>((set, get) => ({
+export const useCatalogStore = create<CatalogState>((set) => ({
   categories: [],
   products: [],
-  activeCategoryId: 1,
-  isExpanded: false,
+  currentProduct: null,
+  activeCategoryId: null,
   isLoading: false,
+  isExpanded: false,
 
-  getProductById: (id: number) => {
-    return (
-      get().products.find((p) => p.product_id === id) ||
-      MOCK_PRODUCTS.find((p) => p.product_id === id)
-    );
-  },
+  expandCatalog: () => set({ isExpanded: true }),
+
   fetchInitialData: async () => {
-    set({ isLoading: true });
-    setTimeout(() => {
-      const initialProducts = MOCK_PRODUCTS.filter(
-        (p) => p.id_category === 1
-      ).slice(0, 3);
-      set({
-        categories: MOCK_CATEGORIES,
-        products: initialProducts,
-        activeCategoryId: 1,
-        isExpanded: false,
-        isLoading: false,
-      });
-    }, 500);
+    set({ isLoading: true, isExpanded: false });
+    try {
+      const categoriesRes = await api.get<Category[]>('/catalog/categories');
+      const categories = categoriesRes.data;
+
+      if (categories.length > 0) {
+        const firstCategoryId = categories[0].id_category;
+        const productsRes = await api.get<Product[]>(
+          `/catalog/categories/${firstCategoryId}/products`
+        );
+
+        set({
+          categories,
+          products: productsRes.data,
+          activeCategoryId: firstCategoryId,
+          isLoading: false,
+        });
+      } else {
+        set({ categories: [], products: [], isLoading: false });
+      }
+    } catch (error) {
+      console.error('Ошибка при загрузке каталога:', error);
+      set({ isLoading: false });
+    }
   },
 
   setActiveCategory: async (id: number) => {
     set({ isLoading: true, activeCategoryId: id, isExpanded: false });
-    setTimeout(() => {
-      const filtered = MOCK_PRODUCTS.filter((p) => p.id_category === id).slice(
-        0,
-        3
+    try {
+      const response = await api.get<Product[]>(
+        `/catalog/categories/${id}/products`
       );
-      set({ products: filtered, isLoading: false });
-    }, 400);
+      set({ products: response.data, isLoading: false });
+    } catch (error) {
+      console.error(`Ошибка при загрузке товаров категории ${id}:`, error);
+      set({ products: [], isLoading: false });
+    }
   },
 
-  expandCatalog: async () => {
-    const { activeCategoryId } = get();
-    set({ isLoading: true });
-    setTimeout(() => {
-      const allCategoryProducts = MOCK_PRODUCTS.filter(
-        (p) => p.id_category === activeCategoryId
-      );
-      set({
-        products: allCategoryProducts,
-        isExpanded: true,
-        isLoading: false,
-      });
-    }, 600);
+  fetchProductById: async (id: number) => {
+    set({ isLoading: true, currentProduct: null });
+    try {
+      const response = await api.get<Product>(`/catalog/products/${id}`);
+      set({ currentProduct: response.data, isLoading: false });
+    } catch (error) {
+      console.error(`Ошибка при загрузке товара ${id}:`, error);
+      set({ currentProduct: null, isLoading: false });
+    }
   },
+
+  clearCurrentProduct: () => set({ currentProduct: null }),
 }));

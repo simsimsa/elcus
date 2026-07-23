@@ -4,7 +4,7 @@ import type { Category } from '../../store/useCatalogStore';
 
 interface CatalogSidebarProps {
   categories: Category[];
-  activeCategoryId: number;
+  activeCategoryId: number | null;
   isLoading: boolean;
   onSelectCategory: (id: number) => void;
 }

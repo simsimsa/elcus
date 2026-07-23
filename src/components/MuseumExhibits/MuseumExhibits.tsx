@@ -1,24 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import './MuseumExhibits.scss';
-import type { MuseumItem } from '../../store/museumStore';
+import { useMuseumStore } from '../../store/museumStore';
 import ExhibitCard from '../ui/ExhibitCard/ExhibitCard';
 import Button from '../ui/Button/Button';
 
-interface MuseumExhibitsProps {
-  items: MuseumItem[];
-  isExpanded: boolean;
-  onExpandAll: () => void;
-}
-
-const MuseumExhibits: React.FC<MuseumExhibitsProps> = ({
-  items,
-  isExpanded,
-  onExpandAll,
-}) => {
+const MuseumExhibits: React.FC = () => {
   const { t } = useTranslation();
+  const { items, isExpanded, isLoading, fetchMuseumItems, expandAll } =
+    useMuseumStore();
 
-  // Состояние для хранения выбранной картинки (для модалки)
+  useEffect(() => {
+    fetchMuseumItems();
+  }, [fetchMuseumItems]);
+
   const [selectedItem, setSelectedItem] = useState<{
     name: string;
     image: string;
@@ -26,36 +21,52 @@ const MuseumExhibits: React.FC<MuseumExhibitsProps> = ({
 
   const displayItems = isExpanded ? items : items.slice(0, 4);
 
+  if (isLoading && items.length === 0) {
+    return (
+      <section className="museum-exhibits">
+        <h2 className="exhibits-section-title">
+          {t('museum.exhibits_title', 'Экспонаты музея')}
+        </h2>
+        <div className="museum-loading">
+          {t('common.loading', 'Загрузка...')}
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="museum-exhibits">
-      <h2 className="exhibits-section-title">{t('museum.exhibits_title')}</h2>
+      <h2 className="exhibits-section-title">
+        {t('museum.exhibits_title', 'Экспонаты музея')}
+      </h2>
 
       <div className="exhibits-grid">
-        {displayItems.map((item) => (
-          <ExhibitCard
-            key={item.museum_id}
-            name={item.name_item}
-            imagePath={item.description}
-            // По клику записываем данные в стейт
-            onClick={() =>
-              setSelectedItem({ name: item.name_item, image: item.description })
-            }
-          />
-        ))}
+        {displayItems.map((item) => {
+          const imageUrl = item.image_path || '/images/museum-hero.png';
+
+          return (
+            <ExhibitCard
+              key={item.museum_id}
+              name={item.name_item}
+              imagePath={imageUrl}
+              onClick={() =>
+                setSelectedItem({ name: item.name_item, image: imageUrl })
+              }
+            />
+          );
+        })}
       </div>
 
       {!isExpanded && items.length > 4 && (
         <div className="museum-actions">
-          <Button variant="outline" onClick={onExpandAll}>
-            {t('museum.show_all_btn')}
+          <Button variant="outline" onClick={expandAll}>
+            {t('museum.show_all_btn', 'Показать все')}
           </Button>
         </div>
       )}
 
-      {/* Модальное окно (Lightbox) */}
       {selectedItem && (
         <div className="museum-lightbox" onClick={() => setSelectedItem(null)}>
-          {/* stopPropagation предотвращает закрытие при клике на саму картинку */}
           <div
             className="lightbox-content"
             onClick={(e) => e.stopPropagation()}

@@ -1,52 +1,37 @@
 import { create } from 'zustand';
+import { api } from '../api/axios';
 
 export interface MuseumItem {
   museum_id: number;
   name_item: string;
-  description: string;
+  image_path?: string | null;
+  gallery?: string[] | null;
 }
 
-interface MuseumStore {
+interface MuseumState {
   items: MuseumItem[];
   isExpanded: boolean;
+  isLoading: boolean;
+
+  fetchMuseumItems: () => Promise<void>;
   expandAll: () => void;
 }
 
-const mockMuseumItems: MuseumItem[] = [
-  {
-    museum_id: 1,
-    name_item: 'Граммофон «Молот»',
-    description: '/images/museum-hero.png',
-  },
-  {
-    museum_id: 2,
-    name_item: 'Проигрыватель «Юность-301»',
-    description: '/images/museum-hero.png',
-  },
-  {
-    museum_id: 3,
-    name_item: 'Проигрыватель «Аккорд-201»',
-    description: '/images/museum-hero.png',
-  },
-  {
-    museum_id: 4,
-    name_item: 'Катушечный магнитофон «Весна-212»',
-    description: '/images/museum-hero.png',
-  },
-  {
-    museum_id: 5,
-    name_item: 'Телевизор «Рубин-714»',
-    description: '/images/museum-hero.png',
-  },
-  {
-    museum_id: 6,
-    name_item: 'Громкоговоритель «Рекорд»',
-    description: '/images/museum-hero.png',
-  },
-];
-
-export const useMuseumStore = create<MuseumStore>((set) => ({
-  items: mockMuseumItems,
+export const useMuseumStore = create<MuseumState>((set) => ({
+  items: [],
   isExpanded: false,
+  isLoading: false,
+
+  fetchMuseumItems: async () => {
+    set({ isLoading: true });
+    try {
+      const response = await api.get<MuseumItem[]>('/info/museum');
+      set({ items: response.data, isLoading: false });
+    } catch (error) {
+      console.error('Ошибка при загрузке экспонатов музея:', error);
+      set({ items: [], isLoading: false });
+    }
+  },
+
   expandAll: () => set({ isExpanded: true }),
 }));

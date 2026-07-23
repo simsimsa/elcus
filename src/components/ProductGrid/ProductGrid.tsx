@@ -22,6 +22,9 @@ const ProductGrid: React.FC<ProductGridProps> = ({
 }) => {
   const { t } = useTranslation();
 
+  const LIMIT = 6;
+  const displayProducts = isExpanded ? products : products.slice(0, LIMIT);
+
   return (
     <section className="catalog-content">
       <h3 className="content-subtitle">
@@ -37,10 +40,11 @@ const ProductGrid: React.FC<ProductGridProps> = ({
       ) : (
         <>
           <div className="products-grid">
-            {products.length > 0 ? (
-              products.map((product) => (
+            {displayProducts.length > 0 ? (
+              displayProducts.map((product) => (
                 <ProductCard
                   key={product.product_id}
+                  imagePath={product.image_path}
                   article={product.product_article}
                   name={product.product_name}
                   description={product.product_description}
@@ -55,12 +59,10 @@ const ProductGrid: React.FC<ProductGridProps> = ({
             )}
           </div>
 
-          {!isExpanded && products.length > 0 && (
+          {!isExpanded && products.length > LIMIT && (
             <div className="catalog-actions">
               <Button variant="primary" onClick={onExpand} disabled={isLoading}>
-                {isLoading
-                  ? t('common.loading', 'Загрузка...')
-                  : t('products.show_all', 'Показать все')}
+                {t('products.show_all', 'Показать все')}
               </Button>
             </div>
           )}

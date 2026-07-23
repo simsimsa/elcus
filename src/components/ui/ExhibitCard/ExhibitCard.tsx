@@ -3,7 +3,7 @@ import './ExhibitCard.scss';
 
 interface ExhibitCardProps {
   name: string;
-  imagePath: string;
+  imagePath?: string | null;
   onClick: () => void;
 }
 
