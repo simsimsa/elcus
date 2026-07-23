@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNewsStore } from '../../store/newsStore';
 import NewsItem from '../../components/ui/NewsItem/NewsItem';
@@ -6,11 +6,9 @@ import './News.scss';
 
 const News: React.FC = () => {
   const { t, i18n } = useTranslation();
-  // Достаем fetchNews и isLoading из стора
   const { items, isLoading, fetchNews } = useNewsStore();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-  // Загружаем новости при монтировании компонента
   useEffect(() => {
     fetchNews();
   }, [fetchNews]);
@@ -18,11 +16,11 @@ const News: React.FC = () => {
   return (
     <main className="news-page">
       <div className="news-header">
-        <h1 className="news-main-title">{t('Новости')}</h1>
+        <h1 className="news-main-title">{t('news.title', 'Новости')}</h1>
       </div>
 
       {isLoading ? (
-        <div className="news-loading">{t('Загрузка...')}</div> // Можно заменить на ваш спиннер/скелетон
+        <div className="news-loading">{t('common.loading', 'Загрузка...')}</div>
       ) : (
         <div className="news-timeline-container">
           {items.map((item) => (

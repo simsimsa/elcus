@@ -5,7 +5,7 @@ export interface NewsItemType {
   id_news: number;
   news_title: string;
   news_content: string;
-  news_published: string;
+  news_published?: string | null;
   image_path?: string | null;
   gallery?: string[] | null;
 }
