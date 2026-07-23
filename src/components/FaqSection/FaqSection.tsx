@@ -5,11 +5,10 @@ import Accordion from '../ui/Accordion/Accordion';
 
 const FaqSection: React.FC = () => {
   const { t } = useTranslation();
-  const { categories, faqs, activeCategoryId, setActiveCategory } =
-    useFaqStore();
+  const { categories, faqs, activeCategory, setActiveCategory } = useFaqStore();
 
   const activeFaqs = faqs.filter(
-    (faq) => faq.id_faq_category === activeCategoryId
+    (faq) => faq.id_faq_category === activeCategory
   );
 
   return (
@@ -20,7 +19,7 @@ const FaqSection: React.FC = () => {
           {categories.map((category) => (
             <li key={category.id_faq_category}>
               <button
-                className={`category-btn ${activeCategoryId === category.id_faq_category ? 'active' : ''}`}
+                className={`category-btn ${activeCategory === category.id_faq_category ? 'active' : ''}`}
                 onClick={() => setActiveCategory(category.id_faq_category)}
               >
                 {t(category.name_faq_category)}
