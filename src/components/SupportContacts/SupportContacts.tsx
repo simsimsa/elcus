@@ -6,6 +6,12 @@ import Button from '../ui/Button/Button';
 const SupportContacts: React.FC = () => {
   const { t } = useTranslation();
 
+  const handleEmailClick = () => {
+    const mailtoLink = document.createElement('a');
+    mailtoLink.href = 'mailto:info@elcus.ru';
+    mailtoLink.click();
+  };
+
   return (
     <div className="support-contacts-card">
       <div className="support-contacts-info">
@@ -29,7 +35,9 @@ const SupportContacts: React.FC = () => {
           <a href="mailto:info@elcus.ru">info@elcus.ru</a>
         </div>
 
-        <Button variant="primary">{t('support.contacts.ask_btn')}</Button>
+        <Button variant="primary" onClick={handleEmailClick}>
+          {t('support.contacts.ask_btn')}
+        </Button>
       </div>
     </div>
   );

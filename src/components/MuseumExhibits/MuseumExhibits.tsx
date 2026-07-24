@@ -29,7 +29,7 @@ const MuseumExhibits: React.FC = () => {
     image: string;
   } | null>(null);
 
-  const displayItems = isExpanded ? items : items.slice(0, 8);
+  const displayItems = isExpanded ? items : items.slice(0, 12);
 
   if (isLoading && items.length === 0) {
     return (
