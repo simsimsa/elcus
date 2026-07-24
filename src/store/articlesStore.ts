@@ -1,13 +1,20 @@
 import { create } from 'zustand';
+import { api } from '../api/axios';
 
-export interface News {
-  id_news: number;
-  news_title: string;
-  news_content: string;
-  news_published: string;
+export interface Article {
+  id_source: number;
+  source_title: string;
+  source_content: string | null;
+  url_external: string | null;
+  id_category: number;
+  category: {
+    name: string;
+    id_category: number;
+  };
+  gallery: string[] | null;
 }
 
-export interface Source {
+export interface MockSource {
   id_source: number;
   sorce_title: string;
   sorce_content: string;
@@ -16,36 +23,17 @@ export interface Source {
 }
 
 interface ArticlesStore {
-  news: News[];
-  sources: Source[];
-  activeTab: 'news' | 'sources';
+  articles: Article[];
+  sources: MockSource[];
+  activeTab: 'articles' | 'sources';
   isExpanded: boolean;
-  setActiveTab: (tab: 'news' | 'sources') => void;
+  isLoading: boolean;
+  setActiveTab: (tab: 'articles' | 'sources') => void;
   expandAll: () => void;
+  fetchArticles: () => Promise<void>;
 }
 
-const mockNews: News[] = [
-  {
-    id_news: 1,
-    news_title: 'Новые возможности плат ЭЛКУС',
-    news_content: 'Обзор обновлений и улучшений',
-    news_published: '2023-10-01T10:00:00Z',
-  },
-  {
-    id_news: 2,
-    news_title: 'Применение устройств ЭЛКУС',
-    news_content: 'Практические примеры и кейсы',
-    news_published: '2023-09-15T10:00:00Z',
-  },
-  {
-    id_news: 3,
-    news_title: 'Технические статьи',
-    news_content: 'Полезные материалы и инструкции',
-    news_published: '2023-09-01T10:00:00Z',
-  },
-];
-
-const mockSources: Source[] = [
+const mockSources: MockSource[] = [
   {
     id_source: 1,
     sorce_title: 'CAN in Automation (CiA)',
@@ -132,10 +120,23 @@ const mockSources: Source[] = [
 ];
 
 export const useArticlesStore = create<ArticlesStore>((set) => ({
-  news: mockNews,
+  articles: [],
   sources: mockSources,
-  activeTab: 'news',
+  activeTab: 'articles',
   isExpanded: false,
+  isLoading: false,
+
   setActiveTab: (tab) => set({ activeTab: tab, isExpanded: false }),
   expandAll: () => set({ isExpanded: true }),
+
+  fetchArticles: async () => {
+    set({ isLoading: true });
+    try {
+      const response = await api.get<Article[]>('/info/sources');
+      set({ articles: response.data, isLoading: false });
+    } catch (error) {
+      console.log(error);
+      set({ isLoading: false, articles: [] });
+    }
+  },
 }));

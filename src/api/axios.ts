@@ -6,7 +6,7 @@ const LOCAL_URL = import.meta.env.VITE_LOCAL_API_URL || 'http://127.0.0.1:8000';
 
 export const api = axios.create({
   baseURL: PROD_URL,
-  timeout: 3000,
+  timeout: 1000,
   headers: {
     'Content-Type': 'application/json',
   },

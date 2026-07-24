@@ -17,10 +17,45 @@
       font-weight: 600;
     }
 
-    p {
+    .article-description-wrapper {
+      margin-top: 0.25rem;
+    }
+
+    .article-description {
       margin: 0;
       font-size: 0.95rem;
       color: #6b7280;
+
+      &.collapsed {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      &.expanded {
+        display: block;
+        overflow: visible;
+      }
+    }
+
+    .toggle-text-btn {
+      background: none;
+      border: none;
+      color: #0052cc;
+      padding: 0;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      font-family: inherit;
+      cursor: pointer;
+      text-decoration: underline;
+
+      &:hover {
+        text-decoration: none;
+        color: #003d99;
+      }
     }
   }
 
