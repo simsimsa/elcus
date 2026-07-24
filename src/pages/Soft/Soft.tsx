@@ -33,7 +33,7 @@ const Soft: React.FC = () => {
       <div className="soft-content">
         <SoftTabs
           osList={osList}
-          activeOsId={activeOsId}
+          activeOsId={activeOsId || 0}
           onTabChange={setActiveOs}
           isLoading={isLoading}
         />

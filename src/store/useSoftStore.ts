@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { api } from '../api/axios';
 
 export interface OS {
   id_os: number;
@@ -9,127 +10,120 @@ export interface Soft {
   soft_id: number;
   soft_name: string;
   version: string;
-  soft_size: string;
+  soft_size: string | null;
   soft_file_path: string;
-  soft_updated: string;
-  description: string;
-  id_os: number;
+  soft_updated: string | null;
+  description: string | null;
+  os_id: number | null;
   product_id: number | null;
+  os: OS[];
 }
-
-const MOCK_OS: OS[] = [
-  { id_os: 1, os_name: 'Windows' },
-  { id_os: 2, os_name: 'DOS' },
-  { id_os: 3, os_name: 'Linux' },
-  { id_os: 4, os_name: 'QNX' },
-  { id_os: 5, os_name: 'LabVIEW' },
-  { id_os: 6, os_name: 'Документация' },
-];
-
-const MOCK_SOFT: Soft[] = [
-  {
-    soft_id: 1,
-    id_os: 1,
-    soft_name: 'Windows 10 / 11',
-    description: 'Драйверы для Windows 10 и 11 (x86 / x64)',
-    version: '2.1.0',
-    soft_size: '15 MB',
-    soft_file_path: '/downloads/win10_11_driver.zip',
-    soft_updated: '2023-10-01T12:00:00Z',
-    product_id: null,
-  },
-  {
-    soft_id: 2,
-    id_os: 1,
-    soft_name: 'Windows 7 / 8 / 8.1',
-    description: 'Драйверы для Windows 7 / 8 / 8.1',
-    version: '1.8.5',
-    soft_size: '12 MB',
-    soft_file_path: '/downloads/win7_8_driver.zip',
-    soft_updated: '2022-05-15T10:00:00Z',
-    product_id: null,
-  },
-  {
-    soft_id: 3,
-    id_os: 1,
-    soft_name: 'Windows XP / 2000',
-    description: 'Устаревшие версии драйверов',
-    version: '1.0.2',
-    soft_size: '5 MB',
-    soft_file_path: '/downloads/winxp_driver.zip',
-    soft_updated: '2015-08-20T09:00:00Z',
-    product_id: null,
-  },
-  {
-    soft_id: 4,
-    id_os: 1,
-    soft_name: 'Утилита конфигурации',
-    description: 'ПО для настройки плат под Windows',
-    version: '3.0.1',
-    soft_size: '25 MB',
-    soft_file_path: '/downloads/config_tool.exe',
-    soft_updated: '2024-01-10T14:30:00Z',
-    product_id: null,
-  },
-  {
-    soft_id: 5,
-    id_os: 3,
-    soft_name: 'Linux Kernel 5.x',
-    description: 'Исходные коды драйвера для Linux',
-    version: '2.0.0',
-    soft_size: '2 MB',
-    soft_file_path: '/downloads/linux_driver.tar.gz',
-    soft_updated: '2023-11-05T11:00:00Z',
-    product_id: null,
-  },
-];
 
 interface SoftState {
   osList: OS[];
+  allSoft: Soft[];
   softItems: Soft[];
-  activeOsId: number;
+  activeOsId: number | null;
   isExpanded: boolean;
   isLoading: boolean;
+  error: string | null;
   fetchInitialData: () => Promise<void>;
-  setActiveOs: (id: number) => Promise<void>;
-  expandSoft: () => Promise<void>;
+  setActiveOs: (id: number) => void;
+  expandSoft: () => void;
 }
 
 export const useSoftStore = create<SoftState>((set, get) => ({
   osList: [],
+  allSoft: [],
   softItems: [],
-  activeOsId: 1,
+  activeOsId: null,
   isExpanded: false,
   isLoading: false,
+  error: null,
 
   fetchInitialData: async () => {
-    set({ isLoading: true });
-    setTimeout(() => {
-      const initialSoft = MOCK_SOFT.filter((s) => s.id_os === 1).slice(0, 2);
-      set({
-        osList: MOCK_OS,
-        softItems: initialSoft,
-        activeOsId: 1,
-        isExpanded: false,
-        isLoading: false,
+    set({ isLoading: true, error: null });
+    try {
+      // Дергаем твой реальный эндпоинт из FastAPI
+      const response = await api.get<Soft[]>('/catalog/softwares');
+      const allSoft = response.data;
+
+      // Т.к. на бэкенде нет отдельного списка ОС, вытаскиваем уникальные ОС из софта
+      const osMap = new Map<number, OS>();
+      allSoft.forEach((soft) => {
+        if (soft.os && Array.isArray(soft.os)) {
+          soft.os.forEach((osItem) => {
+            if (!osMap.has(osItem.id_os)) {
+              osMap.set(osItem.id_os, osItem);
+            }
+          });
+        }
       });
-    }, 400);
+
+      // Превращаем Map в массив и сортируем по id_os
+      const osList = Array.from(osMap.values()).sort(
+        (a, b) => a.id_os - b.id_os
+      );
+
+      if (osList.length > 0) {
+        const firstOsId = osList[0].id_os;
+
+        // Берем софт только для первой ОС
+        const softForFirstOs = allSoft.filter(
+          (s) => s.os && s.os.some((osItem) => osItem.id_os === firstOsId)
+        );
+
+        set({
+          osList,
+          allSoft,
+          activeOsId: firstOsId,
+          softItems: softForFirstOs.slice(0, 2),
+          isExpanded: softForFirstOs.length <= 2,
+          isLoading: false,
+        });
+      } else {
+        set({ osList: [], allSoft, isLoading: false });
+      }
+    } catch (error: unknown) {
+      console.error('Ошибка при загрузке софта:', error);
+
+      let errorMessage = 'Ошибка загрузки данных';
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+
+      set({
+        isLoading: false,
+        error: errorMessage,
+        osList: [],
+        softItems: [],
+      });
+    }
   },
 
-  setActiveOs: async (id: number) => {
-    set({ isLoading: true, activeOsId: id, isExpanded: false });
-    setTimeout(() => {
-      const filtered = MOCK_SOFT.filter((s) => s.id_os === id).slice(0, 2);
-      set({ softItems: filtered, isLoading: false });
-    }, 300);
+  setActiveOs: (id: number) => {
+    const { allSoft } = get();
+
+    // Ищем софт, у которого в массиве os есть переданный id
+    const filtered = allSoft.filter(
+      (s) => s.os && s.os.some((osItem) => osItem.id_os === id)
+    );
+
+    set({
+      activeOsId: id,
+      softItems: filtered.slice(0, 2),
+      isExpanded: filtered.length <= 2,
+    });
   },
 
-  expandSoft: async () => {
-    const { activeOsId } = get();
-    set({ isLoading: true });
-    setTimeout(() => {
-      const allOsSoft = MOCK_SOFT.filter((s) => s.id_os === activeOsId);
-      set({ softItems: allOsSoft, isExpanded: true, isLoading: false });
-    }, 500);
+  expandSoft: () => {
+    const { allSoft, activeOsId } = get();
+    if (activeOsId === null) return;
+
+    const allOsSoft = allSoft.filter(
+      (s) => s.os && s.os.some((osItem) => osItem.id_os === activeOsId)
+    );
+
+    set({ softItems: allOsSoft, isExpanded: true });
   },
 }));
