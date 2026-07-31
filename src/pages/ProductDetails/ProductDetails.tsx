@@ -54,7 +54,11 @@ const ProductDetails: React.FC = () => {
 
   return (
     <main className="product-details-page">
-      <Button variant="text" className="back-btn" onClick={() => navigate(-1)}>
+      <Button
+        variant="text"
+        className="back-btn"
+        onClick={() => navigate('/products')}
+      >
         &larr; {t('common.back', 'Назад в каталог')}
       </Button>
 
@@ -125,7 +129,21 @@ const ProductDetails: React.FC = () => {
                 {Object.entries(product_attributes).map(([key, value]) => (
                   <tr key={key}>
                     <td className="attr-key">{key}</td>
-                    <td className="attr-value">{String(value)}</td>
+                    <td className="attr-value">
+                      {typeof value === 'object' && value !== null
+                        ? Array.isArray(value)
+                          ? value
+                              .map((item) =>
+                                typeof item === 'object'
+                                  ? item.name ||
+                                    item.title ||
+                                    JSON.stringify(item)
+                                  : item
+                              )
+                              .join(', ')
+                          : JSON.stringify(value)
+                        : String(value)}
+                    </td>
                   </tr>
                 ))}
               </tbody>

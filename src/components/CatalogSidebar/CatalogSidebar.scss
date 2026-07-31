@@ -11,7 +11,15 @@
   @media (max-width: 900px) {
     width: 100%;
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 0.75rem;
+    -webkit-overflow-scrolling: touch;
+
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   .category-btn {
@@ -38,6 +46,12 @@
       background: var(--bg-white, #ffffff);
       color: var(--primary-blue, #0056b3);
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    @media (max-width: 900px) {
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+      white-space: nowrap;
     }
   }
 }
